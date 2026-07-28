@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
 
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>
-Energy Monitor IoT
+IoT Energy Monitor
 </title>
+
 
 <link rel="stylesheet" href="style.css">
 
@@ -22,21 +27,30 @@ Energy Monitor IoT
 
 
 <h1>
-⚡ ENERGY MONITOR IoT
+⚡ IoT ENERGY MONITOR
 </h1>
+
+
+<p class="subtitle">
+ESP32-S3 + PZEM-004T
+</p>
+
 
 
 <div class="container">
 
-<div class="card">
+
+<div class="card status-card">
 
 <h3>Status</h3>
 
 <span id="status">
--
+Menunggu data...
 </span>
 
 </div>
+
+
 
 <div class="card">
 
@@ -46,9 +60,10 @@ Energy Monitor IoT
 0
 </span>
 
-V
+<p>Volt (V)</p>
 
 </div>
+
 
 
 
@@ -60,7 +75,7 @@ V
 0
 </span>
 
-A
+<p>Ampere (A)</p>
 
 </div>
 
@@ -75,7 +90,7 @@ A
 0
 </span>
 
-W
+<p>Watt (W)</p>
 
 </div>
 
@@ -90,7 +105,35 @@ W
 0
 </span>
 
-kWh
+<p>kWh</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h3>Frekuensi</h3>
+
+<span id="frekuensi">
+0
+</span>
+
+<p>Hz</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h3>Power Factor</h3>
+
+<span id="pf">
+0
+</span>
 
 </div>
 
@@ -98,14 +141,21 @@ kWh
 
 </div>
 
+
+
+<div class="chart-box">
 
 
 <h2>
-Grafik Daya
+Grafik Daya Real-Time
 </h2>
 
 
-<canvas id="grafik"></canvas>
+<canvas id="grafikDaya"></canvas>
+
+
+</div>
+
 
 
 
@@ -113,5 +163,6 @@ Grafik Daya
 
 
 </body>
+
 
 </html>

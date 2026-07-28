@@ -1,5 +1,12 @@
+// ================================
+// MQTT CONFIGURATION
+// ================================
+
+
 const host =
 "wss://9b902896ff004582a696e5037b584b4f.s1.eu.hivemq.cloud:8884/mqtt";
+
+
 
 const options = {
 
@@ -9,10 +16,16 @@ username:
 password:
 "Yogayoga1919!@",
 
-clean:true
+clean:true,
+
+connectTimeout:4000
 
 };
 
+
+
+
+// Connect MQTT
 
 
 const client =
@@ -23,9 +36,24 @@ options
 
 
 
+
+// Topic
+
+const topic =
+"rumah/energi/data";
+
+
+
+
+// ================================
+// MQTT CONNECT
+// ================================
+
+
 client.on(
 "connect",
-function(){
+()=>{
+
 
 console.log(
 "MQTT Connected"
@@ -33,7 +61,7 @@ console.log(
 
 
 client.subscribe(
-"rumah/energi/data"
+topic
 );
 
 
@@ -43,34 +71,81 @@ client.subscribe(
 
 
 
+
+
+// ================================
+// CHART CONFIG
+// ================================
+
+
 let waktu=[];
 
-let nilaiDaya=[];
+let dayaData=[];
 
 
 
 const chart =
 new Chart(
+
 document.getElementById(
-"grafik"
+"grafikDaya"
 ),
+
 {
+
 
 type:"line",
 
+
 data:{
+
 
 labels:waktu,
 
+
 datasets:[{
 
-label:"Daya Watt",
 
-data:nilaiDaya
+label:
+"Daya (Watt)",
+
+
+data:
+dayaData,
+
+
+tension:0.3
+
 
 }]
 
+
+},
+
+
+options:{
+
+
+responsive:true,
+
+
+scales:{
+
+
+y:{
+
+
+beginAtZero:true
+
+
 }
+
+
+}
+
+
+}
+
 
 }
 
@@ -79,15 +154,34 @@ data:nilaiDaya
 
 
 
+// ================================
+// RECEIVE MQTT DATA
+// ================================
+
+
 client.on(
 "message",
-function(topic,message){
+(topic,message)=>{
 
 
 let data =
 JSON.parse(
 message.toString()
 );
+
+
+
+console.log(data);
+
+
+
+// tampilkan data
+
+
+document.getElementById(
+"status"
+).innerHTML =
+data.status;
 
 
 
@@ -119,15 +213,80 @@ data.energi.toFixed(3);
 
 
 
-let sekarang =
+document.getElementById(
+"frekuensi"
+).innerHTML =
+data.frekuensi.toFixed(2);
+
+
+
+document.getElementById(
+"pf"
+).innerHTML =
+data.pf.toFixed(2);
+
+
+
+
+// ================================
+// STATUS COLOR
+// ================================
+
+
+let status =
+document.getElementById(
+"status"
+);
+
+
+
+if(data.status=="Beban Aktif"){
+
+
+status.style.color="green";
+
+
+}
+
+
+else if(
+data.status=="Tidak Ada Beban"
+){
+
+
+status.style.color="gray";
+
+
+}
+
+
+else{
+
+
+status.style.color="red";
+
+
+}
+
+
+
+
+
+// ================================
+// UPDATE GRAPH
+// ================================
+
+
+let jam =
 new Date()
 .toLocaleTimeString();
 
 
 
-waktu.push(sekarang);
+waktu.push(jam);
 
-nilaiDaya.push(
+
+dayaData.push(
 data.daya
 );
 
@@ -135,8 +294,11 @@ data.daya
 
 if(waktu.length>20){
 
+
 waktu.shift();
-nilaiDaya.shift();
+
+dayaData.shift();
+
 
 }
 
@@ -146,4 +308,6 @@ chart.update();
 
 
 
-});
+}
+
+);

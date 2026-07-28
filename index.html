@@ -1,1 +1,108 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+
+<title>
+Energy Monitor IoT
+</title>
+
+<link rel="stylesheet" href="style.css">
+
+
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+
+
+<body>
+
+
+<h1>
+⚡ ENERGY MONITOR IoT
+</h1>
+
+
+<div class="container">
+
+
+<div class="card">
+
+<h3>Tegangan</h3>
+
+<span id="tegangan">
+0
+</span>
+
+V
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Arus</h3>
+
+<span id="arus">
+0
+</span>
+
+A
+
+</div>
+
+
+
+
+<div class="card">
+
+<h3>Daya</h3>
+
+<span id="daya">
+0
+</span>
+
+W
+
+</div>
+
+
+
+
+<div class="card">
+
+<h3>Energi</h3>
+
+<span id="energi">
+0
+</span>
+
+kWh
+
+</div>
+
+
+
+</div>
+
+
+
+<h2>
+Grafik Daya
+</h2>
+
+
+<canvas id="grafik"></canvas>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
